@@ -1,0 +1,10 @@
+keyboard
+mouse
+monitor
+microphone
+frame
+graphic card
+motherboard
+CPU
+power unit
+RAM
