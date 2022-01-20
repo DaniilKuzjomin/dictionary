@@ -4,47 +4,31 @@ ang=[]
 
 
 def main():
+    global rus
+    global ang
     print("Добро пожаловать в Русско-Английский словарь!")
     print("Выберите с какого на какой язык Вы хотите перевести слово(-а)")
     print()
-    print("1 - с Русского на Английский")
-    print("2 - с Английского на Русский")
-    print("3 - показать список существующих слов")
-    print("4 - добавить Ваше слово(-а) в существующий список")
+    print("1 - Перевести Ваше слово")
+    print("2 - показать список существующих слов")
+    print("3 - добавить Ваше слово(-а) в существующий список")
     vibor=int(input("-> "))
     if vibor==1:
-        print("Введите слово ( на Русском ) которое Вы хотите перевести.")
-        slovo_rus=str(input("-> "))
+        translate(ang,rus)
     if vibor==2:
-        print("Введите слово ( на Английском ) которое Вы хотите перевести.")
-        slovo_eng=str(input("-> "))
-    if vibor==3:
         print("Выберите какой список слов Вы хотите посмотреть.")
         print()
         print("1 - Русский список слов")
         print("2 - Английский список слов")
         vibor_s=int(input("-> "))
         if vibor_s==1:
-            global rus
             rus=failist_lugemine("rus.txt",rus)
             print(rus)
         if vibor_s==2:
-            global ang
             ang=failist_lugemine("ang.txt",ang)
             print(ang)
         else:
             print("Error.")
-    if vibor==4:
-
-
-
-
-
-
-
-
-
-
 
 
 def failist_lugemine(f:str,l:list):
@@ -71,7 +55,26 @@ def rida_salvestamine(f:str,rida:str):
     fail.write(rida+"\n")
     fail.close()
 
+def translate(l1:list,l2:list):
+    slovo=input("Введите слово которое Вы хотите перевести -> ")
+    if slovo in l1:
+        trans=l2[l1.index(slovo)]
+        print(slovo+"-"+ trans)
+    elif slovo in l2:
+        trans=l1[l2.index(slovo)]
+        print(slovo+"-"+trans)
+    else:
+        print("К сожалению данное слово отсутcвует в списке.")
+        print()
+    print("Хотите ли Вы добавить вписанное слово в список?")
 
+def correction(word:str,l:list):
+    for i in range(len(l)):
+        if l[i]==word:
+            new_word==word.replace(word,input("Новое слово -> "))
+            l.insert(i,new_word)
+            l.remove(word)
+    return l
 
 
 # rus=novoe_slovo("rus.txt",input("Введите новое слово ->"))
