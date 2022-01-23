@@ -1,4 +1,5 @@
 
+
 rus=[]
 ang=[]
 
@@ -10,25 +11,44 @@ def main():
     print("Выберите с какого на какой язык Вы хотите перевести слово(-а)")
     print()
     print("1 - Перевести Ваше слово")
-    print("2 - показать список существующих слов")
-    print("3 - добавить Ваше слово(-а) в существующий список")
+    print("2 - Показать список существующих слов")
+    print("3 - Добавить Ваше слово(-а) в существующий список")
+    print("4 - Исправить ошибку в слове")
+    print("5 - Проговорить выбранное Вами слово")
+    print("6 - Проверка знаний по словам из списка")
     vibor=int(input("-> "))
-    if vibor==1:
-        translate(ang,rus)
-    if vibor==2:
-        print("Выберите какой список слов Вы хотите посмотреть.")
-        print()
-        print("1 - Русский список слов")
-        print("2 - Английский список слов")
-        vibor_s=int(input("-> "))
-        if vibor_s==1:
-            rus=failist_lugemine("rus.txt",rus)
-            print(rus)
-        if vibor_s==2:
-            ang=failist_lugemine("ang.txt",ang)
-            print(ang)
-        else:
-            print("Error.")
+    if vibor not in [1,2,3,4,5,6]:
+      print("Ошибка, введите число от 1 до 6.")
+    else:
+      if vibor==1:
+          translate(ang,rus)
+      if vibor==2:
+          print("Выберите какой список слов Вы хотите посмотреть.")
+          print()
+          print("1 - Русский список слов")
+          print("2 - Английский список слов")
+          vibor_s=int(input("-> "))
+          if vibor_s==1:
+              rus=failist_lugemine("rus.txt",rus)
+              print(rus)
+          if vibor_s==2:
+              ang=failist_lugemine("ang.txt",ang)
+              print(ang)
+          else:
+              print("Error.")
+      if vibor==3:
+        new_word()
+      if vibor==4:
+        correction(rus,"rus.txt",ang,"ang.txt")
+      if vibor==5:
+        print("Введите слово которое Вы хотите проговорить.")
+        word=input("-> ")
+        print("На каком языке Вы хотите проговорить слово?")
+        language=input("-> ")
+        heli(word,language)
+      if vibor==6:
+
+
 
 
 def failist_lugemine(f:str,l:list):
@@ -40,7 +60,7 @@ def failist_lugemine(f:str,l:list):
     fail.close()
     return l
 
-def failisse_salvestamine(f:str,l:list):
+def save_letter(f:str,l:list):
     """Loetelu salvestame failisse
     """
     fail=open(f,"w")
@@ -48,7 +68,15 @@ def failisse_salvestamine(f:str,l:list):
         fail.write(el+"\n")
     fail.close()
 
-def rida_salvestamine(f:str,rida:str):
+def read_file(f:str,l:list):
+  fail=open(f,"r",encoding="utf-8-sig")
+  mas=[]
+  for line in fail:
+    l.append(line.strip())
+  fail.close()
+  return l
+
+def save_word(f:str,rida:str):
     """Üks sõna või lause(rida) salvestame failisse
     """
     fail=open(f,"a")
@@ -59,22 +87,61 @@ def translate(l1:list,l2:list):
     slovo=input("Введите слово которое Вы хотите перевести -> ")
     if slovo in l1:
         trans=l2[l1.index(slovo)]
-        print(slovo+"-"+ trans)
+        print(slovo+" - "+ trans)
     elif slovo in l2:
         trans=l1[l2.index(slovo)]
-        print(slovo+"-"+trans)
+        print(slovo+" - "+trans)
     else:
         print("К сожалению данное слово отсутcвует в списке.")
         print()
-    print("Хотите ли Вы добавить вписанное слово в список?")
+        print("Хотите ли Вы добавить вписанное слово в список?")
+        print("1 - Да")
+        print("2 - Нет")
+        v=int(input("-> "))
+        if v==1:
+          new_word()
+        if v==2:
+          print("...")
 
-def correction(word:str,l:list):
-    for i in range(len(l)):
-        if l[i]==word:
-            new_word==word.replace(word,input("Новое слово -> "))
-            l.insert(i,new_word)
-            l.remove(word)
-    return l
+def fail_save(f:str,l:list):
+  fail=open(f,"w")
+  for el in l:
+    fail.write(el+"\n")
+  fail.close
+
+def correction(rus:list,ang:list,f1:list,f2:list):
+  print("Введите слово которое было написано с ошибкой")
+  word=input("-> ")
+  if word not in rus and word not in ang:
+    print("Написанное Вами слово отсутсвует в списке.")
+  else:
+    if word in rus:
+      trans=ang[rus.index(word)]
+      rus.remove(word)
+      ang.remove(trans)
+    elif word in ang:
+      trans=rus[ang.index(word)]
+      ang.remove(word)
+      rus.remove(trans)
+    rus.append(input("Введите исправленное слово ( на русском ) ->"))
+    ang.append(input("Введите исправленное слово( на английском ) -> "))
+    fail_save(f1,rus)
+    fail_save(f2,ang)
 
 
-# rus=novoe_slovo("rus.txt",input("Введите новое слово ->"))
+def new_word():
+    print("Введите слово на русском, которое Вы хотите добавить.")
+    rusw=input("-> ")
+    print("Введите слово на английском, которое Вы хотите добавить.")
+    engw=input("-> ")
+    rus=save_word("rus.txt",rusw)
+    eng=save_word("ang.txt",engw)
+    return rus, eng
+    print("Ваше слово удачно добавлено!")
+
+ import os
+ from gtts import gtts
+
+def heli(text:str,language:str):
+   obj=gTTS(text=text,language=lang,slow=False).save("heli.mp3")
+   os.system("heli.mp3")
