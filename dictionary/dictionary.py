@@ -1,9 +1,8 @@
 from MyModule import *
 
+rus=read_file("rus.txt",rus)
+ang=read_file("ang.txt",ang)
 rus=[]
 ang=[]
-#rus=failist_lugemine("rus.txt",rus)
-#ang=failist_lugemine("ang.txt",ang)
-
 
 main()
