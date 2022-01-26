@@ -1,4 +1,4 @@
-
+from random import *
 
 rus=[]
 ang=[]
@@ -15,8 +15,9 @@ def main():
     print("3 - Добавить Ваше слово(-а) в существующий список")
     print("4 - Исправить ошибку в слове")
     print("5 - Проговорить выбранное Вами слово")
+    print("6 - Проверка знаний по словам из списка")
     vibor=int(input("-> "))
-    if vibor not in [1,2,3,4,5]:
+    if vibor not in [1,2,3,4,5,6]:
       print("Ошибка, введите число от 1 до 6.")
     else:
       if vibor==1:
@@ -45,6 +46,8 @@ def main():
         print("На каком языке Вы хотите проговорить слово?")
         language=input("-> ")
         heli(word,language)
+      if vibor==6:
+        test(rus,ang)
 
 
 
@@ -137,9 +140,42 @@ def new_word():
     return rus, eng
     print("Ваше слово удачно добавлено!")
 
- import os
- from gtts import gtts
+  import os
+  from gtts import gtts
 
-def heli(text:str,language:str):
-   obj=gTTS(text=text,language=lang,slow=False).save("heli.mp3")
-   os.system("heli.mp3")
+ def heli(text:str,language:str):
+    obj=gTTS(text=text,language=lang,slow=False).save("heli.mp3")
+    os.system("heli.mp3")
+
+def test(list1:list,list2:list):
+  s=[]
+  s.extend(list1)
+  s.extend(list2)
+  random.shuffle(s)
+  res=0
+  for i in range(len(list1)):
+    print("Переведи данное слово",s[i])
+    ex=input("-> ")
+    if ex in list1 or ex in list2:
+      if s[i] in list1:
+        if list1.index(s[i])==list2.index(ex):
+          res+=1
+          print("Поздравляю, Ваш ответ правильный.")
+      elif s[i] in list2:
+        if list2.index(s[i])==list1.index(ex):
+          res+=1
+          print("Поздравляю, Ваш ответ правильный.")
+    else:
+      print("К сожалению, Ваш ответ не правильный.")
+
+  print("Хотите ли Вы узнать свой результат?")
+  print("1 - Да")
+  print("2 - Нет")
+  q=int(input("-> "))
+  if q in [1,2]:
+    if q==1:
+      print("Ваш результат -> ",res)
+    if q==2:
+      print("Хорошего дня!")
+  else:
+    print("Неизвестная ошибка")
