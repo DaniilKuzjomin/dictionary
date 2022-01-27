@@ -1,4 +1,4 @@
-
+from random import *
 
 rus=[]
 ang=[]
@@ -151,6 +151,7 @@ def test(list1:list,list2:list):
   s=[]
   s.extend(list1)
   s.extend(list2)
+  shuffle(s)
   res=0
   for i in range(len(list1)):
     print("Переведи данное слово",s[i])
