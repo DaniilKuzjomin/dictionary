@@ -173,7 +173,9 @@ def test(list1:list,list2:list):
   q=int(input("-> "))
   if q in [1,2]:
     if q==1:
-      print("Ваш результат -> ",res)
+      respr=(res/len(list1))*100
+      print("Ваш результат -> ",respr)
+      print("Хорошего дня!")
     if q==2:
       print("Хорошего дня!")
   else:
