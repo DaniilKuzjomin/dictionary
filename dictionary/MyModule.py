@@ -140,12 +140,12 @@ def new_word():
     return rus, eng
     print("Ваше слово удачно добавлено!")
 
-  import os
-  from gtts import gtts
+#   import os
+#   from gtts import gtts
 
- def heli(text:str,language:str):
-    obj=gTTS(text=text,language=lang,slow=False).save("heli.mp3")
-    os.system("heli.mp3")
+#  def heli(text:str,language:str):
+#     obj=gTTS(text=text,language=lang,slow=False).save("heli.mp3")
+#     os.system("heli.mp3")
 
 def test(list1:list,list2:list):
   s=[]
@@ -175,7 +175,7 @@ def test(list1:list,list2:list):
   if q in [1,2]:
     if q==1:
       respr=(res/len(list1))*100
-      print("Ваш результат -> ",respr)
+      print("Ваш результат -> ",respr,"%")
       print("Хорошего дня!")
     if q==2:
       print("Хорошего дня!")
